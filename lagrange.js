@@ -1,5 +1,5 @@
 function createBasicPolynomial(xValues,i) {
-    function basicPolynomial(x) {
+    return (x) => {
         let divider = 1
         let result = 1
         for (let j = 0; j < xValues.length; j++) {
@@ -10,7 +10,6 @@ function createBasicPolynomial(xValues,i) {
         }
         return result / divider
     }
-    return basicPolynomial
 }
 
 
@@ -19,23 +18,48 @@ function createLagrangePolynomial(xValues,yValues) {
     for (let i = 0 ; i < xValues.length; i++) {
         basicPolynomials.push(createBasicPolynomial(xValues,i))
     }
-    function lagrangePolinomial(x) {
+    return (x) => {
         let result = 0
         for (let i = 0; i < yValues.length; i++) {
             result+=yValues[i] * basicPolynomials[i](x)
         }
         return result
     }
-    return lagrangePolinomial
+}
+
+const xVal = []
+const yVal = []
+
+
+let $switch1 = true
+let $switch2 = true
+
+while($switch1) {
+    const inputData = +prompt('вводите значения X по одному')
+    $switch1 = inputData ? true : false
+    if($switch1) {
+        xVal.push(inputData)
+    }
+}
+
+while($switch2) {
+    const inputData = +prompt('вводите значения Y по одному')
+    $switch2 = inputData ? true : false
+    if($switch2) {
+        yVal.push(inputData)
+    }
 }
 
 
-const xVal = [-1,2,4]
-const yVal = [9,1,6]
+
+
 
 const lagPol = createLagrangePolynomial(xVal,yVal)
 
+
 console.log(lagPol(3))
+
+document.write(lagPol(+prompt('введите аргумент функции, для которого требуется найти значение функции')))
 
 for(let x = 0; x < xVal.length; x++) {
     console.log(xVal[x],lagPol(xVal[x]) )
